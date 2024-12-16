@@ -8,6 +8,7 @@ package com.mycompany.blackjackgame;
  *
  * @author SChang2026
  */
+//Imports
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
+//Objects
 public class BlackjackGame extends JFrame {
     private final JLabel messageLabel;
     private final JButton hitButton;
@@ -33,6 +35,7 @@ public class BlackjackGame extends JFrame {
     private int balance;
     private int currentBet;
 
+//Jframe and screen, made fullscreen and green
 public BlackjackGame() {
     setTitle("Blackjack Game");
     setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,9 +47,11 @@ public BlackjackGame() {
 
     getContentPane().setBackground(new Color(0, 128, 34));
 
+//Betting money
+
     balance = 500000000;
 
-    // Message label
+// Message label
     messageLabel = new JLabel("Welcome to Blackjack!", SwingConstants.CENTER);
     messageLabel.setFont(new Font("Arial", Font.BOLD, 20));
     messageLabel.setForeground(Color.WHITE);
@@ -55,7 +60,7 @@ public BlackjackGame() {
     dealerArea = new JTextArea();
     dealerArea.setEditable(false);
 
-    // Create and customize the border for "Dealer Hand"
+// Create and customize the border for "Dealer Hand"
     var dealerBorder = BorderFactory.createTitledBorder("Dealer Hand");
     dealerBorder.setTitleColor(Color.WHITE); // Set title color to white
     dealerArea.setBorder(dealerBorder);
@@ -66,7 +71,7 @@ public BlackjackGame() {
     playerArea = new JTextArea();
     playerArea.setEditable(false);
 
-    // Create and customize the border for "Your Hand"
+// Create and customize the border for "Your Hand"
     var playerBorder = BorderFactory.createTitledBorder("Your Hand");
     playerBorder.setTitleColor(Color.WHITE); // Set title color to white
     playerArea.setBorder(playerBorder);
@@ -74,46 +79,52 @@ public BlackjackGame() {
     playerArea.setBackground(new Color(0, 128, 34));
     playerArea.setForeground(Color.WHITE);
 
+//Center Text
         JPanel centerPanel = new JPanel(new GridLayout(2, 1));
         centerPanel.add(new JScrollPane(dealerArea));
         centerPanel.add(new JScrollPane(playerArea));
         centerPanel.setOpaque(false);
         add(centerPanel, BorderLayout.CENTER);
 
-        // Buttons
+ // Hit Button
         JPanel buttonPanel = new JPanel();
         hitButton = new JButton("Hit");
         hitButton.setBackground(Color.YELLOW);
         hitButton.setOpaque(true);
-        hitButton.setBorderPainted(false);
-
+        hitButton.setBorderPainted(false);\
+    
+//Stand Button
         standButton = new JButton("Stand");
         standButton.setBackground(Color.YELLOW);
         standButton.setOpaque(true);
         standButton.setBorderPainted(false);
 
+//New Game Button    
         newGameButton = new JButton("New Game");
         newGameButton.setBackground(Color.YELLOW);
         newGameButton.setOpaque(true);
         newGameButton.setBorderPainted(false);
-
+    
+//Makes buttons function
         buttonPanel.add(hitButton);
         buttonPanel.add(standButton);
         buttonPanel.add(newGameButton);
         buttonPanel.setOpaque(false);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Top panel with balance and betting
+// Top panel with balance and betting
         JPanel topPanel = new JPanel(new GridLayout(2, 1));
         balanceLabel = new JLabel("Balance: $" + balance, SwingConstants.CENTER);
         balanceLabel.setFont(new Font("Arial", Font.BOLD, 20));
         balanceLabel.setForeground(Color.WHITE);
 
+//Betting    
         JPanel betPanel = new JPanel();
         JLabel betLabel = new JLabel("Enter Bet: ");
         betLabel.setForeground(Color.WHITE);
         betField = new JTextField(10);
 
+//Panel Visibility    
         betPanel.add(betLabel);
         betPanel.add(betField);
         betPanel.setOpaque(false);
@@ -122,7 +133,7 @@ public BlackjackGame() {
         topPanel.setOpaque(false);
         add(topPanel, BorderLayout.NORTH);
 
-       // Instructions Box
+// Instructions Box
         JPanel instructionsPanel = new JPanel(new BorderLayout());
         JTextArea instructionsArea = new JTextArea();
         instructionsArea.setEditable(false);
@@ -139,32 +150,34 @@ public BlackjackGame() {
         instructionsArea.setFont(new Font("Serif", Font.PLAIN, 16));
         instructionsArea.setBackground(new Color(0, 128, 34));
         instructionsArea.setForeground(Color.WHITE);
-
+    
+//Close buttons for instructions
         JButton closeInstructionsButton = new JButton("Close Rules");
         closeInstructionsButton.setBackground(Color.RED);
         closeInstructionsButton.setForeground(Color.WHITE);
         closeInstructionsButton.setFont(new Font("Arial", Font.BOLD, 16));
         closeInstructionsButton.addActionListener(e -> instructionsPanel.setVisible(false));
-
+    
         instructionsPanel.add(new JScrollPane(instructionsArea), BorderLayout.CENTER);
         instructionsPanel.add(closeInstructionsButton, BorderLayout.SOUTH);
         instructionsPanel.setOpaque(false);
         add(instructionsPanel, BorderLayout.WEST);
 
 
-        // Exit Button
+// Exit Button
         JButton exitButton = new JButton("Exit");
         exitButton.setBackground(Color.RED);
         exitButton.setForeground(Color.WHITE);
         exitButton.setFont(new Font("Arial", Font.BOLD, 20));
         exitButton.addActionListener(e -> System.exit(0));
 
+//Exit Panel    
         JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         exitPanel.setOpaque(false);
         exitPanel.add(exitButton);
         add(exitPanel, BorderLayout.EAST);
 
-        // Action Listeners
+// Action Listeners
         hitButton.addActionListener(new HitAction());
         standButton.addActionListener(new StandAction());
         newGameButton.addActionListener(new NewGameAction());
@@ -179,7 +192,7 @@ public BlackjackGame() {
    
 
 
-
+//Card Mathematics
     private void startNewGame() {
         try {
             currentBet = Integer.parseInt(betField.getText());
@@ -190,7 +203,7 @@ public BlackjackGame() {
             messageLabel.setText("Invalid bet! Please enter a valid amount.");
             return;
         }
-
+//Screen Updates
         balance -= currentBet;
         updateBalance();
 
@@ -212,6 +225,8 @@ public BlackjackGame() {
         standButton.setEnabled(true);
     }
 
+//Card Value Display    
+
     private void updateDisplay() {
         if (dealerCardHidden) {
             dealerArea.setText("[Hidden], " + dealerHand.getVisibleCards() + " (Value: Hidden)");
@@ -220,6 +235,8 @@ public BlackjackGame() {
         }
         playerArea.setText(playerHand.toString());
     }
+
+//Checks the mathematics of the card and lines them up to the rules of blackjack    
 
     private void checkGameStatus() {
         if (playerHand.getValue() > 21) {
@@ -237,6 +254,8 @@ public BlackjackGame() {
             endGame();
         }
     }
+
+//Dearler card generation and functions
 
     private void dealerPlay() {
         dealerCardHidden = false;
@@ -259,14 +278,18 @@ public BlackjackGame() {
         endGame();
     }
 
+//Game End from rules    
     private void endGame() {
         hitButton.setEnabled(false);
         standButton.setEnabled(false);
     }
 
+//Updates betting balance    
     private void updateBalance() {
         balanceLabel.setText("Balance: $" + balance);
     }
+
+//Hit function    
 
     private class HitAction implements ActionListener {
         @Override
@@ -276,7 +299,7 @@ public BlackjackGame() {
             checkGameStatus();
         }
     }
-
+//Stand function  
     private class StandAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -285,7 +308,7 @@ public BlackjackGame() {
             dealerPlay();
         }
     }
-
+//New Game function  
     private class NewGameAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -305,6 +328,7 @@ public BlackjackGame() {
     }
 }
 
+//Card Value Mathematics 1
 class Deck {
     private final ArrayList<String> cards;
 
@@ -327,6 +351,8 @@ class Deck {
         return cards.remove(cards.size() - 1);
     }
 }
+
+//Card Value Mathematics 2
 
 class Hand {
     private final ArrayList<String> cards;
