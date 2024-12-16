@@ -146,7 +146,8 @@ public BlackjackGame() {
                 "6. If you go over 21, you bust and lose the bet.\n" +
                 "\n" +
                 "Mouse Rules:\n" +
-                "Use it to hit, stand, and press new game.");
+                "Use it to hit, stand, and press new game." +
+                "You must bet and press new game in order to start the game.");                );
         instructionsArea.setFont(new Font("Serif", Font.PLAIN, 16));
         instructionsArea.setBackground(new Color(0, 128, 34));
         instructionsArea.setForeground(Color.WHITE);
